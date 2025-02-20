@@ -106,11 +106,11 @@ const Charts: React.FC<IChartsProps> = (props) => {
   const [treeData, setTreeData] = React.useState<IUser[]>([]);
 
 
-  const getUsers = async (account?: string, team?: string) => {
+  const getUsers = async (team?: string, account?: string) => {
     try {
-      let filterQuery = `Account eq '${account || ""}'`;
-      if (team) {
-        filterQuery += ` and Team eq '${team}'`;
+      let filterQuery = `Team eq '${team || ""}'`;
+      if (account) {
+        filterQuery += ` and Account eq '${account}'`;
       }
       const data: IUser[] = await _sp.web.lists
         .getByTitle(LIST_NAME)
