@@ -1,0 +1,54 @@
+
+.org-chart-container {
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f2f2f2;
+  height: 100vh; 
+  box-sizing: border-box;
+}
+
+.org-chart-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+
+.user-node {
+  background-color: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+  transition: transform 0.2s;
+  margin: 10px;
+}
+
+.user-node:hover {
+  transform: translateY(-3px);
+}
+
+.user-node.dummy {
+  background-color: #ffecec;
+  border-color: #ffaaaa;
+  font-style: italic;
+}
+
+.user-node-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #0078d4;
+}
+
+.user-node-body {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.user-node-body p {
+  margin: 6px 0;
+}
