@@ -106,12 +106,9 @@ const Charts: React.FC<IChartsProps> = (props) => {
   const [treeData, setTreeData] = React.useState<IUser[]>([]);
 
 
-  const getUsers = async (team?: string, account?: string) => {
+  const getUsers = async (project:string) => {
     try {
-      let filterQuery = `Team eq '${team || ""}'`;
-      if (account) {
-        filterQuery += ` and Account eq '${account}'`;
-      }
+      const filterQuery = `Team eq '${project}' or Account eq '${project}'`;
       const data: IUser[] = await _sp.web.lists
         .getByTitle(LIST_NAME)
         .items.filter(filterQuery)();
@@ -124,7 +121,14 @@ const Charts: React.FC<IChartsProps> = (props) => {
   };
 
   React.useEffect(() => {
-    getUsers("Siemens");
+    const currentSiteUrl = props.context.pageContext.web.absoluteUrl;
+    const siteName = currentSiteUrl.split("/sites/")[1] || "";
+    console.log("Current Site Name:", siteName);
+   if(siteName){
+     getUsers(siteName);
+     return 
+   }
+    getUsers("Advantage");
   }, []);
 
   return (
