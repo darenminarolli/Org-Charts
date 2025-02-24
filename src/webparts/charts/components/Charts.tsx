@@ -56,6 +56,10 @@ const buildHierarchy = (data: IUser[]): IUser[] => {
 
 
 const OrgChartNode: React.FC<{ node: IUser }> = ({ node }) => {
+  const [expanded, setExpanded] = React.useState(false);
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  }
   return (
     <TreeNode
       label={
@@ -89,10 +93,13 @@ const OrgChartNode: React.FC<{ node: IUser }> = ({ node }) => {
               )}
             </div>
           )}
+            {node.children.length > 0 && (
+              <button className="expand-btn" onClick={toggleExpanded}>{expanded ? "-" : "+"}</button>
+            )}
         </div>
       }
     >
-      {node.children.map((child) => (
+      {expanded && node.children.map((child) => (
         <OrgChartNode key={child.Id} node={child} />
       ))}
     </TreeNode>
@@ -106,12 +113,9 @@ const Charts: React.FC<IChartsProps> = (props) => {
   const [treeData, setTreeData] = React.useState<IUser[]>([]);
 
 
-  const getUsers = async (team?: string, account?: string) => {
+  const getUsers = async (project: string) => {
     try {
-      let filterQuery = `Team eq '${team || ""}'`;
-      if (account) {
-        filterQuery += ` and Account eq '${account}'`;
-      }
+      const filterQuery = `Team eq '${project || ""}' or Account eq '${project}'`;
       const data: IUser[] = await _sp.web.lists
         .getByTitle(LIST_NAME)
         .items.filter(filterQuery)();
