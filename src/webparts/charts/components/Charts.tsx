@@ -56,6 +56,10 @@ const buildHierarchy = (data: IUser[]): IUser[] => {
 
 
 const OrgChartNode: React.FC<{ node: IUser }> = ({ node }) => {
+  const [expanded, setExpanded] = React.useState(false);
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  }
   return (
     <TreeNode
       label={
@@ -89,10 +93,13 @@ const OrgChartNode: React.FC<{ node: IUser }> = ({ node }) => {
               )}
             </div>
           )}
+            {node.children.length > 0 && (
+              <button className="expand-btn" onClick={toggleExpanded}>{expanded ? "-" : "+"}</button>
+            )}
         </div>
       }
     >
-      {node.children.map((child) => (
+      {expanded && node.children.map((child) => (
         <OrgChartNode key={child.Id} node={child} />
       ))}
     </TreeNode>
