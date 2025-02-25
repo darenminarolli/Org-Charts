@@ -11,7 +11,6 @@ import { Tree, TreeNode } from "react-organizational-chart";
 import { PanZoomContainer } from "./PanZoomContainer";
 import "./Charts.css";
 
-
 const buildHierarchy = (data: IUser[]): IUser[] => {
   const allNodes: Record<string, IUser> = {};
   const isChild = new Set<string>();
@@ -24,15 +23,13 @@ const buildHierarchy = (data: IUser[]): IUser[] => {
     allNodes[fullName] = user;
   });
 
-
   data.forEach((user) => {
     if (user.reporting) {
       const supervisorName = user.reporting.trim();
       let supervisorNode = allNodes[supervisorName];
       if (!supervisorNode) {
-
         supervisorNode = {
-          Id: supervisorName, 
+          Id: supervisorName,
           fullName: supervisorName,
           children: [],
           isDummy: true,
@@ -54,12 +51,11 @@ const buildHierarchy = (data: IUser[]): IUser[] => {
   return roots;
 };
 
-
 const OrgChartNode: React.FC<{ node: IUser }> = ({ node }) => {
   const [expanded, setExpanded] = React.useState(false);
   const toggleExpanded = () => {
     setExpanded(!expanded);
-  }
+  };
   return (
     <TreeNode
       label={
@@ -91,35 +87,40 @@ const OrgChartNode: React.FC<{ node: IUser }> = ({ node }) => {
                   <strong>Location:</strong> {node.location}
                 </p>
               )}
+              {node.Email && (
+                <p>
+                  <strong>Email:</strong> {node.Email}
+                </p>
+              )}
             </div>
           )}
-            {node.children.length > 0 && (
-              <button className="expand-btn" onClick={toggleExpanded}>{expanded ? "-" : "+"}</button>
-            )}
+          {node.children.length > 0 && (
+            <button className="expand-btn" onClick={toggleExpanded}>
+              {expanded ? "-" : "+"}
+            </button>
+          )}
         </div>
       }
     >
-      {expanded && node.children.map((child) => (
-        <OrgChartNode key={child.Id} node={child} />
-      ))}
+      {expanded &&
+        node.children.map((child) => (
+          <OrgChartNode key={child.Id} node={child} />
+        ))}
     </TreeNode>
   );
 };
-
 
 const Charts: React.FC<IChartsProps> = (props) => {
   const LIST_NAME = "Employees";
   const _sp: SPFI = getSP(props.context)!;
   const [treeData, setTreeData] = React.useState<IUser[]>([]);
 
-
-  const getUsers = async (project:string) => {
+  const getUsers = async (project: string) => {
     try {
       const filterQuery = `Team eq '${project}' or Account eq '${project}'`;
       const data: IUser[] = await _sp.web.lists
         .getByTitle(LIST_NAME)
         .items.filter(filterQuery)();
-        console.log("Data",data);
       const hierarchy = buildHierarchy(data);
       setTreeData(hierarchy);
     } catch (error) {
@@ -131,12 +132,13 @@ const Charts: React.FC<IChartsProps> = (props) => {
     const currentSiteUrl = props.context.pageContext.web.absoluteUrl;
     const siteName = currentSiteUrl.split("/sites/")[1] || "";
     console.log("Current Site Name:", siteName);
-   if(siteName){
-     getUsers(siteName);
-     return 
-   }
+    //  if(siteName){
+    //    getUsers(siteName);
+    //    return
+    //  }
     getUsers("Advantage");
   }, []);
+
 
   return (
     <div className="org-chart-container">
@@ -181,6 +183,11 @@ const Charts: React.FC<IChartsProps> = (props) => {
                       {root.location && (
                         <p>
                           <strong>Location:</strong> {root.location}
+                        </p>
+                      )}
+                      {root.Email && (
+                        <p>
+                          <strong>Location:</strong> {root?.Email}
                         </p>
                       )}
                     </div>

@@ -22,4 +22,5 @@ export interface IUser {
   fullName: string;
   children: IUser[];
   isDummy?: boolean;
+  Email?: string;
 }

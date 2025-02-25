@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import * as React from "react";
 import type { ICount, ISummaryProps } from "./ISummaryProps";
 import { SPFI } from "@pnp/sp";
@@ -14,6 +16,7 @@ import {
   CategoryScale,
   ChartOptions,
 } from "chart.js";
+
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJS.register(
@@ -164,7 +167,7 @@ const Summary: React.FC<ISummaryProps> = (props) => {
       },
       datalabels: {
         display: true,
-        formatter: (value, ctx) => {
+        formatter: (value: number, ctx: any) => {
           const percentage = ((value / total) * 100).toFixed(0);
           const location = ctx.chart.data.labels?.[ctx.dataIndex];
           const count = value;
@@ -172,7 +175,7 @@ const Summary: React.FC<ISummaryProps> = (props) => {
 
           return `${location}: ${percentage}%\n(${count} ${employeesText})`;
         },
-        color: (context) => {
+        color: (context:any) => {
           const index = context.dataIndex;
           const colors = [black, yellow, gray];
           return colors[index % colors.length];
