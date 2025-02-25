@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/charts/ChartsWebPart.manifest.json"
         }
       ]
+    },
+    "summary-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/summary/SummaryWebPart.js",
+          "manifest": "./src/webparts/summary/SummaryWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "ChartsWebPartStrings": "lib/webparts/charts/loc/{locale}.js"
+    "ChartsWebPartStrings": "lib/webparts/charts/loc/{locale}.js",
+    "SummaryWebPartStrings": "lib/webparts/summary/loc/{locale}.js"
   }
 }
