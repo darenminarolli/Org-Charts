@@ -132,10 +132,10 @@ const Charts: React.FC<IChartsProps> = (props) => {
     const currentSiteUrl = props.context.pageContext.web.absoluteUrl;
     const siteName = currentSiteUrl.split("/sites/")[1] || "";
     console.log("Current Site Name:", siteName);
-    //  if(siteName){
-    //    getUsers(siteName);
-    //    return
-    //  }
+     if(siteName){
+       getUsers(siteName);
+       return
+     }
     getUsers("Advantage");
   }, []);
 
