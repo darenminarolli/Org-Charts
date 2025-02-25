@@ -139,7 +139,7 @@ const Charts: React.FC<IChartsProps> = (props) => {
     getUsers("Advantage");
   }, []);
 
-
+console.log('treeData', treeData)
   return (
     <div className="org-chart-container">
       <h1>Organizational Charts</h1>

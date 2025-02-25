@@ -2,7 +2,7 @@
 .org-chart-container {
   padding: 20px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: transparent;
+  background-color: #182534;
   height: 100vh; 
   box-sizing: border-box;
 }
