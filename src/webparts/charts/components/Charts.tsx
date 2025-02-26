@@ -52,7 +52,7 @@ const buildHierarchy = (data: IUser[]): IUser[] => {
 };
 
 const OrgChartNode: React.FC<{ node: IUser }> = ({ node }) => {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(true);
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
