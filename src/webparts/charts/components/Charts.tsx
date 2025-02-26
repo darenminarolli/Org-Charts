@@ -116,7 +116,7 @@ const Charts: React.FC<IChartsProps> = (props) => {
 
   const getUsers = async (project: string) => {
     try {
-      const filterQuery = `Team eq '${project}' or Account eq '${project}'`;
+      const filterQuery = `Account eq '${project}' or Team eq '${project}'`;
       const data: IUser[] = await _sp.web.lists
         .getByTitle(LIST_NAME)
         .items.filter(filterQuery)();
@@ -141,7 +141,7 @@ const Charts: React.FC<IChartsProps> = (props) => {
 console.log('treeData', treeData)
   return (
     <div className="org-chart-container">
-      <h1>Organizational Charts</h1>
+      <h1>Organizational </h1>
       <PanZoomContainer>
         <div className="org-chart-wrapper">
           {treeData.map((root) => (
