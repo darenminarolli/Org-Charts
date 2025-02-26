@@ -102,24 +102,33 @@ const OrgChartNode: React.FC<{ node: IUser; level?: number }> = ({ node, level =
         </div>
       }
     >
-      {node.children.map((child) => (
-          level < 2 || expanded ? <OrgChartNode key={child.Id} node={child} level={level + 1}/> : null
-        ))}
+      {node.children.map((child) =>
+        level < 2 || expanded ? (
+          <OrgChartNode key={child.Id} node={child} level={level + 1} />
+        ) : null
+      )}
     </TreeNode>
   );
 };
 
 const Charts: React.FC<IChartsProps> = (props) => {
+  // Guard: check if the context is provided
+  if (!props.context) {
+    console.error("SP context is undefined. Please ensure your web part is provided with a valid SharePoint context.");
+    return <div>Error: SP context not available</div>;
+  }
+
   const LIST_NAME = "Employees";
   const _sp: SPFI = getSP(props.context)!;
   const [treeData, setTreeData] = React.useState<IUser[]>([]);
-
+  console.log('props.site', props.site)
   const getUsers = async (project: string) => {
     try {
       const filterQuery = `Account eq '${project}' or Team eq '${project}'`;
       const data: IUser[] = await _sp.web.lists
         .getByTitle(LIST_NAME)
         .items.filter(filterQuery)();
+      console.log("data", data);
       const hierarchy = buildHierarchy(data);
       setTreeData(hierarchy);
     } catch (error) {
@@ -131,17 +140,17 @@ const Charts: React.FC<IChartsProps> = (props) => {
     const currentSiteUrl = props.context.pageContext.web.absoluteUrl;
     const siteName = currentSiteUrl.split("/sites/")[1] || "";
     console.log("Current Site Name:", siteName);
-     if(siteName){
-       getUsers(siteName);
-       return
-     }
+    if (props.site) {
+      getUsers(props.site);
+      return;
+    }
     getUsers("Advantage");
   }, []);
 
-console.log('treeData', treeData)
+  console.log("treeData", treeData);
   return (
     <div className="org-chart-container">
-      <h1>Organizational </h1>
+      <h1>Organizational Chart</h1>
       <PanZoomContainer>
         <div className="org-chart-wrapper">
           {treeData.map((root) => (
@@ -186,7 +195,7 @@ console.log('treeData', treeData)
                       )}
                       {root.Email && (
                         <p>
-                          <strong>Location:</strong> {root?.Email}
+                          <strong>Email:</strong> {root.Email}
                         </p>
                       )}
                     </div>
