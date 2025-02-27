@@ -53,13 +53,19 @@ const buildHierarchy = (data: IUser[]): IUser[] => {
 
 const OrgChartNode: React.FC<{ node: IUser; level?: number }> = ({ node, level = 1 }) => {
   const [expanded, setExpanded] = React.useState(false);
+  const nodeRef = React.useRef<HTMLDivElement>(null);
   const toggleExpanded = () => {
     setExpanded((prev) => !prev);
   };
+  React.useEffect(() => {
+    if (expanded && nodeRef.current) {
+      nodeRef.current.scrollIntoView({ behavior: "smooth", block: "center"});
+    }
+  }, [expanded])
   return (
     <TreeNode
       label={
-        <div className={`user-node ${node.isDummy ? "dummy" : ""}`}>
+        <div className={`user-node ${node.isDummy ? "dummy" : ""}`} ref={nodeRef}>
           <div className="user-node-header">
             <h3>
               {node.fullName} {node.isDummy && ""}
