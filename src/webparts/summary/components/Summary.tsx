@@ -29,7 +29,7 @@ ChartJS.register(
 );
 
 const black = "#000000";
-const yellow = "#FFD700";
+const yellow = "#FFCE51";
 const gray = "#969AA1";
 const white = "#FFFFFF";
 
@@ -93,57 +93,70 @@ const Summary: React.FC<ISummaryProps> = (props) => {
 
   // Roles grid
   const ITEMS_PER_ROW = 4;
+  const titleSize = 14;
+  const textSize = 10;
+  const padding = 5;
+  const titleMargin = 15;
 
   const totalCount = roleCounts.reduce((sum, item) => sum + item.count, 0);
   const totalItems = roleCounts.length;
   const lastRowItems = totalItems % ITEMS_PER_ROW;
-  const emptySlots = lastRowItems === 0 ? 3 : 3 - lastRowItems;
+  const emptySlots =
+    lastRowItems === 0 ? ITEMS_PER_ROW - 1 : ITEMS_PER_ROW - lastRowItems - 1;
 
   const styles: Record<string, React.CSSProperties> = {
-    background: {
+    summaryContainer: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      gap: "5%",
+    },
+    rolesContainer: {
       backgroundColor: yellow,
-      marginBottom: "40px",
-      padding: "16px",
+      padding: padding,
     },
     title: {
       fontWeight: "bold",
-      fontSize: "32px",
+      fontSize: titleSize,
       textAlign: "center",
-      marginBottom: "16px",
+      marginBottom: titleMargin,
     },
     gridContainer: {
       display: "grid",
       gridTemplateColumns: `repeat(${ITEMS_PER_ROW}, 1fr)`,
-      gap: "16px",
+      gap: padding,
       background: "transparent",
     },
     gridItem: {
-      padding: "16px",
+      padding: padding,
       backgroundColor: "transparent",
       textAlign: "center",
     },
     itemCount: {
       fontWeight: "bold",
-      fontSize: "32px",
+      fontSize: titleSize,
+      color: black,
     },
     itemTitle: {
-      fontSize: "14px",
+      fontSize: textSize,
+      color: black,
     },
     specialItem: {
-      padding: "16px",
+      padding: padding,
       backgroundColor: black,
       textAlign: "center",
     },
     specialItemCount: {
       color: white,
       fontWeight: "bold",
-      fontSize: "32px",
+      fontSize: titleSize,
     },
     specialItemTitle: {
       color: white,
       fontWeight: "bold",
-      fontSize: "14px",
+      fontSize: textSize,
     },
+    locationsContainer: {},
   };
 
   // Location doughnut chart
@@ -155,6 +168,7 @@ const Summary: React.FC<ISummaryProps> = (props) => {
       {
         data: locationCounts.map((item) => item.count),
         backgroundColor: [black, yellow, gray],
+        borderWidth: 0,
       },
     ],
   };
@@ -175,16 +189,16 @@ const Summary: React.FC<ISummaryProps> = (props) => {
 
           return `${location}: ${percentage}%\n(${count} ${employeesText})`;
         },
-        color: (context:any) => {
+        color: (context: any) => {
           const index = context.dataIndex;
           const colors = [black, yellow, gray];
           return colors[index % colors.length];
         },
         font: {
           weight: "bold",
-          size: 14,
+          size: textSize,
         },
-        padding: 16,
+        padding: padding,
         backgroundColor: white,
         textAlign: "center",
       },
@@ -192,8 +206,8 @@ const Summary: React.FC<ISummaryProps> = (props) => {
   };
 
   return (
-    <div>
-      <div style={styles.background}>
+    <div style={styles.summaryContainer}>
+      <div style={styles.rolesContainer}>
         <div style={styles.title}>Headcounts by Role:</div>
 
         <div style={styles.gridContainer}>
@@ -215,7 +229,7 @@ const Summary: React.FC<ISummaryProps> = (props) => {
         </div>
       </div>
 
-      <div>
+      <div style={styles.locationsContainer}>
         <div style={styles.title}>Headcounts by Location:</div>
         <Doughnut data={chartData} options={chartOptions} />
       </div>
