@@ -93,8 +93,8 @@ const Summary: React.FC<ISummaryProps> = (props) => {
 
   // Roles grid
   const ITEMS_PER_ROW = 4;
-  const titleSize = 14;
-  const textSize = 10;
+  const titleSize = 18;
+  const textSize = 12;
   const padding = 5;
   const titleMargin = 15;
 
@@ -114,12 +114,21 @@ const Summary: React.FC<ISummaryProps> = (props) => {
     rolesContainer: {
       backgroundColor: yellow,
       padding: padding,
+      alignSelf: "center",
     },
-    title: {
+    rolesTitle: {
       fontWeight: "bold",
       fontSize: titleSize,
       textAlign: "center",
       marginBottom: titleMargin,
+      color: black,
+    },
+    LocationsTitle: {
+      fontWeight: "bold",
+      fontSize: titleSize,
+      textAlign: "center",
+      marginBottom: titleMargin,
+      color: white,
     },
     gridContainer: {
       display: "grid",
@@ -156,7 +165,9 @@ const Summary: React.FC<ISummaryProps> = (props) => {
       fontWeight: "bold",
       fontSize: textSize,
     },
-    locationsContainer: {},
+    locationsContainer: {
+      alignSelf: "center",
+    },
   };
 
   // Location doughnut chart
@@ -208,7 +219,7 @@ const Summary: React.FC<ISummaryProps> = (props) => {
   return (
     <div style={styles.summaryContainer}>
       <div style={styles.rolesContainer}>
-        <div style={styles.title}>Headcounts by Role:</div>
+        <div style={styles.rolesTitle}>Headcounts by Role:</div>
 
         <div style={styles.gridContainer}>
           {roleCounts.map((item, index) => (
@@ -230,7 +241,7 @@ const Summary: React.FC<ISummaryProps> = (props) => {
       </div>
 
       <div style={styles.locationsContainer}>
-        <div style={styles.title}>Headcounts by Location:</div>
+        <div style={styles.LocationsTitle}>Headcounts by Location:</div>
         <Doughnut data={chartData} options={chartOptions} />
       </div>
     </div>
