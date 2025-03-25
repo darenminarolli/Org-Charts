@@ -60,8 +60,16 @@
   margin: 8px 0;
 }
 
-.expand-btn {
+.direct-reports {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   margin-top: auto;
+}
+
+.expand-btn {
+  margin: auto 10px;
   background-color: #000;
   color: white;
   border: none;
@@ -77,4 +85,10 @@
 .expand-btn:hover {
   background-color: #005a9e;
   transform: scale(1.1);
+}
+
+.number-report {
+  font-size: 18px;
+  font-weight: bold;
+  margin: auto 10px;
 }

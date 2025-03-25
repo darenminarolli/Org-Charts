@@ -100,11 +100,14 @@ const OrgChartNode: React.FC<{ node: IUser; level?: number }> = ({ node, level =
               )}
             </div>
           )}
-          {node.children.length > 0 && level >= 2 && (
-            <button className="expand-btn" onClick={toggleExpanded}>
-              {expanded ? "-" : "+"}
-            </button>
-          )}
+          <div className="direct-reports">
+            {node.children.length > 0 && level >= 2 && (
+              <button className="expand-btn" onClick={toggleExpanded}>
+                {expanded ? "-" : "+"}
+              </button>
+            )}
+            {node.children.length > 0 && <p className="number-report">({node.children.length})</p>}
+          </div>
         </div>
       }
     >
